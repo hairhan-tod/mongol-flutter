@@ -1132,7 +1132,7 @@ class LineBreaker implements Iterator<RotatableString> {
   }
 
   static bool isBreakChar(String character) {
-    return (character == ' ' || character == '\n');
+    return (character == ' ' || character == '\n' || character == '\r\n');
   }
 
   static const _mongolQuickCheckStart = 0x1800;
