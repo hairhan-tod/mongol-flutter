@@ -27,6 +27,7 @@ import 'package:flutter/widgets.dart'
         ErrorSummary,
         TextDirection,
         TextBaseline,
+        TextScaler,
         TextAffinity;
 import 'package:mongol/src/base/mongol_paragraph.dart';
 
@@ -362,7 +363,8 @@ class MongolTextPainter {
     return _text!.style?.getParagraphStyle(
           textAlign: TextAlign.left,
           textDirection: TextDirection.ltr,
-          textScaleFactor: textScaleFactor,
+          textScaler: TextScaler.linear(textScaleFactor),
+          // textScaleFactor: textScaleFactor,
           maxLines: maxLines,
           ellipsis: ellipsis,
           locale: null,

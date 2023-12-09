@@ -2036,14 +2036,11 @@ class _InputDecoratorState extends State<MongolInputDecorator>
           : themeData.disabledColor;
     }
 
-    final double borderWeight;
-    if (decoration!.isCollapsed ||
+    final double borderWeight = (decoration?.isCollapsed == true ||
         decoration?.border == InputBorder.none ||
-        !decoration!.enabled) {
-      borderWeight = 0.0;
-    } else {
-      borderWeight = isFocused ? 2.0 : 1.0;
-    }
+        decoration?.enabled == false)
+    ? 0.0
+    : (isFocused ? 2.0 : 1.0);
 
     return border.copyWith(
         borderSide: BorderSide(color: borderColor, width: borderWeight));
@@ -2241,7 +2238,7 @@ class _InputDecoratorState extends State<MongolInputDecorator>
 
     final EdgeInsets contentPadding;
     final double floatingLabelWidth;
-    if (decoration!.isCollapsed) {
+    if (decoration?.isCollapsed == true) {
       floatingLabelWidth = 0.0;
       contentPadding = decorationContentPadding ?? EdgeInsets.zero;
     } else if (!border.isOutline) {
@@ -2273,7 +2270,7 @@ class _InputDecoratorState extends State<MongolInputDecorator>
     final _Decorator decorator = _Decorator(
       decoration: _Decoration(
           contentPadding: contentPadding,
-          isCollapsed: decoration!.isCollapsed,
+          isCollapsed: decoration!.isCollapsed ?? false,
           floatingLabelWidth: floatingLabelWidth,
           floatingLabelAlignment: decoration!.floatingLabelAlignment!,
           floatingLabelProgress: _floatingLabelController.value,

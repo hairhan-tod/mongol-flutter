@@ -19,6 +19,7 @@ import 'package:flutter/services.dart'
         LineBoundary,
         LogicalKeyboardKey,
         ParagraphBoundary,
+        RawKeyboard,
         TextBoundary;
 export 'package:flutter/services.dart' show TextSelectionDelegate;
 import 'package:flutter/widgets.dart';
@@ -757,7 +758,8 @@ class MongolTextSelectionGestureDetectorBuilder {
   }
 
   /// Returns true if shift left or right is contained in the given set.
-  static bool _containsShift(Set<LogicalKeyboardKey> keysPressed) {
+  static bool _containsShift() {
+    final keysPressed = RawKeyboard.instance.keysPressed;
     return keysPressed.any(<LogicalKeyboardKey>{
       LogicalKeyboardKey.shiftLeft,
       LogicalKeyboardKey.shiftRight
@@ -944,7 +946,7 @@ class MongolTextSelectionGestureDetectorBuilder {
         kind == PointerDeviceKind.stylus;
 
     // Handle shift + click selection if needed.
-    final bool isShiftPressed = _containsShift(details.keysPressedOnDown);
+    final bool isShiftPressed = _containsShift();
     // It is impossible to extend the selection when the shift key is pressed, if the
     // renderEditable.selection is invalid.
     final bool isShiftPressedValid =
@@ -1040,7 +1042,7 @@ class MongolTextSelectionGestureDetectorBuilder {
   void onSingleTapUp(TapDragUpDetails details) {
     if (delegate.selectionEnabled) {
       // Handle shift + click selection if needed.
-      final bool isShiftPressed = _containsShift(details.keysPressedOnDown);
+      final bool isShiftPressed = _containsShift();
       // It is impossible to extend the selection when the shift key is pressed, if the
       // renderEditable.selection is invalid.
       final bool isShiftPressedValid =
@@ -1474,7 +1476,7 @@ class MongolTextSelectionGestureDetectorBuilder {
       return;
     }
 
-    final bool isShiftPressed = _containsShift(details.keysPressedOnDown);
+    final bool isShiftPressed = _containsShift();
 
     if (isShiftPressed &&
         renderEditable.selection != null &&
@@ -1542,7 +1544,7 @@ class MongolTextSelectionGestureDetectorBuilder {
       return;
     }
 
-    final bool isShiftPressed = _containsShift(details.keysPressedOnDown);
+    final bool isShiftPressed = _containsShift();
 
     if (!isShiftPressed) {
       // Adjust the drag start offset for possible viewport offset changes.
@@ -1738,7 +1740,7 @@ class MongolTextSelectionGestureDetectorBuilder {
   ///    callback.
   @protected
   void onDragSelectionEnd(TapDragEndDetails details) {
-    final bool isShiftPressed = _containsShift(details.keysPressedOnDown);
+    final bool isShiftPressed = _containsShift();
     _dragBeganOnPreviousSelection = null;
 
     if (isShiftPressed) {
